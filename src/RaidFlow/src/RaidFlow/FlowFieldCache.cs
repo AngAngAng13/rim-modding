@@ -16,16 +16,19 @@ namespace RaidFlow
         {
             Pawn pawn = request.pawn;
             Map map = request.map;
+            if (pawn == null || map == null || map.Disposed)
+                return null;
             TraverseParms parms = request.TraverseParms;
             pawn.TryGetAvoidGrid(out AvoidGrid avoidGrid);
             var key = new FlowFieldKey(map, request.ExactDestination, parms.canBashDoors, parms.canBashFences, avoidGrid != null, request.Tuning);
             int now = GenTicks.TicksGame;
             if (fields.TryGetValue(key, out FlowField field))
             {
-                if (now - field.TickComputed < FieldLifetimeTicks)
+                if (!map.Disposed && now - field.TickComputed < FieldLifetimeTicks)
                     return field;
                 fields.Remove(key);
             }
+            SweepDisposed();
             if (fields.Count >= MaxFields)
                 EvictOldest();
             field = FlowField.Compute(map, key, parms, avoidGrid);
@@ -59,6 +62,25 @@ namespace RaidFlow
             }
             request.Resolve(path);
             return true;
+        }
+
+        private static void SweepDisposed()
+        {
+            FlowFieldKey stale = default;
+            bool found = false;
+            foreach (var pair in fields)
+            {
+                if (!pair.Key.Map.Disposed)
+                    continue;
+                stale = pair.Key;
+                found = true;
+                break;
+            }
+            if (found)
+            {
+                fields.Remove(stale);
+                SweepDisposed();
+            }
         }
 
         private static void EvictOldest()
