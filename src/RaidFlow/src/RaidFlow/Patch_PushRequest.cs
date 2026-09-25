@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using HarmonyLib;
 using Verse;
 
@@ -10,7 +11,17 @@ namespace RaidFlow
         {
             if (!RaidFlowScope.IsRaidPath(request))
                 return true;
-            return !FlowFieldRouter.TryResolve(request);
+            if (RaidFlowMod.Settings == null || RaidFlowMod.Settings.useSharedRoutes)
+            {
+                long start = Stopwatch.GetTimestamp();
+                if (FlowFieldRouter.TryResolve(request))
+                {
+                    RaidFlowProfiler.RecordShared(RaidFlowProfiler.ElapsedMs(start));
+                    return false;
+                }
+            }
+            RaidFlowProfiler.RecordNormalStart(request);
+            return true;
         }
     }
 }
