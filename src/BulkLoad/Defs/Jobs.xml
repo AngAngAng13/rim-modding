@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <JobDef>
+    <defName>BulkHaulToTransporter</defName>
+    <driverClass>BulkLoad.JobDriver_BulkHaulToTransporter</driverClass>
+    <reportString>bulk loading TargetB.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+  </JobDef>
+
+  <JobDef>
+    <defName>BulkHaulToPortal</defName>
+    <driverClass>BulkLoad.JobDriver_BulkHaulToPortal</driverClass>
+    <reportString>bulk loading TargetB.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+  </JobDef>
+
+
+  <JobDef>
+    <defName>BulkUnloadCarrier</defName>
+    <driverClass>BulkLoad.JobDriver_BulkUnloadCarrier</driverClass>
+    <reportString>unloading TargetA.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+  </JobDef>
+
+  <JobDef>
+    <defName>BulkDoBill</defName>
+    <driverClass>BulkLoad.JobDriver_BulkDoBill</driverClass>
+    <reportString>doing TargetA.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+  </JobDef>
+
+  <JobDef>
+    <defName>BulkUnloadOwnInventory</defName>
+    <driverClass>BulkLoad.JobDriver_BulkUnloadOwnInventory</driverClass>
+    <reportString>unloading own inventory.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+  </JobDef>
+
+</Defs>

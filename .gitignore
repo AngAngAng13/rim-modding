@@ -1,0 +1,8 @@
+[Bb]in/
+[Oo]bj/
+.vs/
+dist/
+TestResults/
+*.user
+*.md
+Sync-FromSources.ps1

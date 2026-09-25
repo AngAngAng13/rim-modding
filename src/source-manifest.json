@@ -1,0 +1,14 @@
+{
+  // Last-synced source commit per mapping. "file-copy" = source was not a git repo.
+  "FirefoamThrower": "file-copy-2026-09-25",
+  "BulkLoad": "cb4b2fbacc4768444a2b8f0fcc4f47c3b537bd05",
+  "no-loot": "file-copy-2026-09-25",
+  "MirrorBuild": "file-copy-2026-09-25",
+  "StrongWind": "file-copy-2026-09-25",
+  "ReconstructiveSurgery": "file-copy-2026-09-25",
+  "AutoFireTracking": "file-copy-2026-09-25",
+  "PartialMealConsumption": "file-copy-2026-09-25",
+  "AvoidMechanoidSensors": "file-copy-2026-09-25",
+  "WealthTweaks": "9eac6ff51199687ae10472e1cef247cb261b61ec",
+  "RimModUtilities": "file-copy-2026-09-25"
+}

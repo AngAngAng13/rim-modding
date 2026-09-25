@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="PawnFlyerBase">
+    <defName>SwirlFlyer</defName>
+    <label>swirling</label>
+    <thingClass>StrongWind.SwirlFlyer</thingClass>
+    <pawnFlyer>
+      <flightDurationMin>0.5</flightDurationMin>
+      <flightSpeed>12</flightSpeed>
+      <heightFactor>0.3</heightFactor>
+    </pawnFlyer>
+  </ThingDef>
+
+</Defs>

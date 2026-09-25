@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>RimModUtilities</AssemblyName>
+    <RootNamespace>RimModUtilities</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>    <GameModsDir>$(RimWorldDir)\Mods</GameModsDir>
+    <ModDeployDir>$(GameModsDir)\RimModUtilities</ModDeployDir>
+
+    <OutputPath>$(ModDeployDir)\Assemblies\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+
+    <ModRoot>$(MSBuildProjectDirectory)\..\..</ModRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(RimWorldDir)\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" ExcludeAssets="runtime" />
+  </ItemGroup>
+
+</Project>

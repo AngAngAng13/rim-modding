@@ -1,0 +1,16 @@
+## Build artifacts
+**/bin/
+**/obj/
+
+## IDE
+.vs/
+.idea/
+*.user
+*.suo
+
+## OS
+Thumbs.db
+.DS_Store
+
+## RimWorld deploy (don't commit deployed copies)
+## (the .csproj deploys to this path on build, no need to track)

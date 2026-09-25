@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <KeyBindingDef ParentName="ArchitectBase">
+    <defName>MirrorBuild_CycleMode</defName>
+    <label>cycle mirror mode</label>
+    <defaultKeyCodeA>M</defaultKeyCodeA>
+  </KeyBindingDef>
+  <KeyBindingDef ParentName="ArchitectBase">
+    <defName>MirrorBuild_PinAxis</defName>
+    <label>pin mirror axis here</label>
+    <defaultKeyCodeA>N</defaultKeyCodeA>
+  </KeyBindingDef>
+</Defs>

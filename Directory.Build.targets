@@ -1,0 +1,18 @@
+<Project>
+  <ItemGroup>
+    <ModContent Include="$(ModRoot)\**\*" />
+    <ModContent Remove="$(ModRoot)\src\**\*" />
+    <ModContent Remove="$(ModRoot)\.git\**\*" />
+    <ModContent Remove="$(ModRoot)\.vs\**\*" />
+    <ModContent Remove="$(ModRoot)\.idea\**\*" />
+    <ModContent Remove="$(ModRoot)\**\*.user" />
+    <ModContent Remove="$(ModRoot)\.gitignore" />
+    <ModContent Remove="$(ModRoot)\**\*.md" />
+  </ItemGroup>
+
+  <Target Name="DeployModContent" AfterTargets="Build">
+    <Copy SourceFiles="@(ModContent)"
+          DestinationFolder="$(ModDeployDir)\%(RecursiveDir)"
+          SkipUnchangedFiles="true" />
+  </Target>
+</Project>

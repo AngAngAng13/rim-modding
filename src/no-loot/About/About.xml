@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>No Loot</name>
+  <author>pineappleLemonade67</author>
+  <packageId>pineapplelemonade67.noloot</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>Prevents non-player humanlike pawns (enemies, allies, traders) from dropping any loot. Gear is destroyed on death or downed. Recruited pawns keep their gear.
+
+Features:
+- Master toggle: enable/disable the entire mod from the settings page
+- Per-faction exemption: pick which factions keep their loot via a searchable, mod-grouped list
+- Scrollable settings UI with search filter and collapsible mod groups
+
+Requires Harmony.</description>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+    </li>
+  </modDependencies>
+</ModMetaData>

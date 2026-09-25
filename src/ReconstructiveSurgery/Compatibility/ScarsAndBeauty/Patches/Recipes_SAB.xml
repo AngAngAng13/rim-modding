@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!-- Scars and Beauty compatibility (MadExOff.ScarsAndBeauty). Loaded only when S&B is active (see LoadFolders.xml IfModActive). Ingredient mapping proposed by Jovini on Steam. S&B defNames verified against ScarsAndBeauty 1.6: SAB_InsectaMed, SAB_InsectoGel, SAB_Collagenesis, SAB_Agavecine. Research: ResearchProjectIndustrialMeds (simple scar removal), ResearchProjectSpacerMeds (advanced scar removal). Plan Full Reconstruction (FullReconstruction) intentionally unchanged: it expands into the individual bills, which carry the new costs. -->
+
+  <!-- Revise Scar: 1x Standard Medicine + 1x Insectamed OR Insectogel. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="ReviseScar"]/ingredients</xpath>
+    <value>
+      <ingredients>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>MedicineIndustrial</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>SAB_InsectaMed</li>
+              <li>SAB_InsectoGel</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+      </ingredients>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="ReviseScar"]/fixedIngredientFilter</xpath>
+    <value>
+      <fixedIngredientFilter>
+        <categories>
+          <li>Medicine</li>
+        </categories>
+        <disallowedThingDefs>
+          <li>MedicineHerbal</li>
+        </disallowedThingDefs>
+        <thingDefs>
+          <li>SAB_InsectaMed</li>
+          <li>SAB_InsectoGel</li>
+        </thingDefs>
+      </fixedIngredientFilter>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/RecipeDef[defName="ReviseScar"]</xpath>
+    <value>
+      <researchPrerequisite>ResearchProjectIndustrialMeds</researchPrerequisite>
+    </value>
+  </Operation>
+
+  <!-- Reconstructive Graft: 1x Standard/Industrial Medicine + 1x Collagenesis. Collagenesis is synthesized from leather/skin, acts as synthetic skin graft for massive tissue damage. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="GraftBurnScar"]/ingredients</xpath>
+    <value>
+      <ingredients>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>MedicineIndustrial</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>SAB_Collagenesis</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+      </ingredients>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="GraftBurnScar"]/fixedIngredientFilter</xpath>
+    <value>
+      <fixedIngredientFilter>
+        <categories>
+          <li>Medicine</li>
+        </categories>
+        <disallowedThingDefs>
+          <li>MedicineHerbal</li>
+        </disallowedThingDefs>
+        <thingDefs>
+          <li>SAB_Collagenesis</li>
+        </thingDefs>
+      </fixedIngredientFilter>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/RecipeDef[defName="GraftBurnScar"]</xpath>
+    <value>
+      <researchPrerequisite>ResearchProjectSpacerMeds</researchPrerequisite>
+    </value>
+  </Operation>
+
+  <!-- Correct Malunion: 1x Standard Medicine + 1x Agavecine. Agavecine (the most expensive, spoiling drug) actually promotes bone formation irl. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="CorrectMalunion"]/ingredients</xpath>
+    <value>
+      <ingredients>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>MedicineIndustrial</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>SAB_Agavecine</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+      </ingredients>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="CorrectMalunion"]/fixedIngredientFilter</xpath>
+    <value>
+      <fixedIngredientFilter>
+        <categories>
+          <li>Medicine</li>
+        </categories>
+        <disallowedThingDefs>
+          <li>MedicineHerbal</li>
+        </disallowedThingDefs>
+        <thingDefs>
+          <li>SAB_Agavecine</li>
+        </thingDefs>
+      </fixedIngredientFilter>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/RecipeDef[defName="CorrectMalunion"]</xpath>
+    <value>
+      <researchPrerequisite>ResearchProjectSpacerMeds</researchPrerequisite>
+    </value>
+  </Operation>
+
+  <!-- Reconstruct Face: 1x Standard Medicine + 1x Collagenesis OR Insectogel. The surgeon uses Collagenesis as dermal fillers or Insectogel to smooth out skin. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="ReconstructFace"]/ingredients</xpath>
+    <value>
+      <ingredients>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>MedicineIndustrial</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>SAB_Collagenesis</li>
+              <li>SAB_InsectoGel</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+      </ingredients>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="ReconstructFace"]/fixedIngredientFilter</xpath>
+    <value>
+      <fixedIngredientFilter>
+        <categories>
+          <li>Medicine</li>
+        </categories>
+        <disallowedThingDefs>
+          <li>MedicineHerbal</li>
+        </disallowedThingDefs>
+        <thingDefs>
+          <li>SAB_Collagenesis</li>
+          <li>SAB_InsectoGel</li>
+        </thingDefs>
+      </fixedIngredientFilter>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/RecipeDef[defName="ReconstructFace"]</xpath>
+    <value>
+      <researchPrerequisite>ResearchProjectIndustrialMeds</researchPrerequisite>
+    </value>
+  </Operation>
+
+  <!-- Reconstruct Nose: 1x Standard Medicine + 1x Collagenesis. Rebuilding cartilage and skin from scratch requires the leather-based Collagenesis to form the structure of the new nose. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="ReconstructNose"]/ingredients</xpath>
+    <value>
+      <ingredients>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>MedicineIndustrial</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>SAB_Collagenesis</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+      </ingredients>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="ReconstructNose"]/fixedIngredientFilter</xpath>
+    <value>
+      <fixedIngredientFilter>
+        <categories>
+          <li>Medicine</li>
+        </categories>
+        <disallowedThingDefs>
+          <li>MedicineHerbal</li>
+        </disallowedThingDefs>
+        <thingDefs>
+          <li>SAB_Collagenesis</li>
+        </thingDefs>
+      </fixedIngredientFilter>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/RecipeDef[defName="ReconstructNose"]</xpath>
+    <value>
+      <researchPrerequisite>ResearchProjectSpacerMeds</researchPrerequisite>
+    </value>
+  </Operation>
+
+  <!-- Repair Organ Scarring: 1x Glitterworld Medicine + 1x Agavecine. Internal organ repair is incredibly complex, therefore it requires the hardest to acquire drug in S&B. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="RepairOrganScarring"]/ingredients</xpath>
+    <value>
+      <ingredients>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>MedicineUltratech</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>SAB_Agavecine</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+      </ingredients>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="RepairOrganScarring"]/fixedIngredientFilter</xpath>
+    <value>
+      <fixedIngredientFilter>
+        <categories>
+          <li>Medicine</li>
+        </categories>
+        <disallowedThingDefs>
+          <li>MedicineHerbal</li>
+          <li>MedicineIndustrial</li>
+        </disallowedThingDefs>
+        <thingDefs>
+          <li>SAB_Agavecine</li>
+        </thingDefs>
+      </fixedIngredientFilter>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/RecipeDef[defName="RepairOrganScarring"]</xpath>
+    <value>
+      <researchPrerequisite>ResearchProjectSpacerMeds</researchPrerequisite>
+    </value>
+  </Operation>
+
+  <!-- Aesthetic Contouring: 1x Glitterworld Medicine + 2x Collagenesis. Pumping the colonist full of premium collagen fillers to make them beautiful. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="AestheticContouring"]/ingredients</xpath>
+    <value>
+      <ingredients>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>MedicineUltratech</li>
+            </thingDefs>
+          </filter>
+          <count>1</count>
+        </li>
+        <li>
+          <filter>
+            <thingDefs>
+              <li>SAB_Collagenesis</li>
+            </thingDefs>
+          </filter>
+          <count>2</count>
+        </li>
+      </ingredients>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="AestheticContouring"]/fixedIngredientFilter</xpath>
+    <value>
+      <fixedIngredientFilter>
+        <categories>
+          <li>Medicine</li>
+        </categories>
+        <disallowedThingDefs>
+          <li>MedicineHerbal</li>
+          <li>MedicineIndustrial</li>
+        </disallowedThingDefs>
+        <thingDefs>
+          <li>SAB_Collagenesis</li>
+        </thingDefs>
+      </fixedIngredientFilter>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/RecipeDef[defName="AestheticContouring"]</xpath>
+    <value>
+      <researchPrerequisite>ResearchProjectSpacerMeds</researchPrerequisite>
+    </value>
+  </Operation>
+
+  <!-- In-game descriptions: base text plus Jovini's rationale, so the bill dialog explains the new ingredients. Only applied when S&B is active. -->
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="ReviseScar"]/description</xpath>
+    <value>
+      <description>Excise old scar tissue from a healed cut, stab, or laceration and reclose the wound for primary healing (scar revision / cicatrix excision). Treats surface scars only, will not restore a missing part or internal organ. Requires insectamed or insectogel in addition to standard medicine.</description>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="GraftBurnScar"]/description</xpath>
+    <value>
+      <description>Excise dead tissue, eschar, mangled flesh, and contracted scar, then cover the defect with a split-thickness skin graft. Treats burns, frostbite, crush mangling, shredded flesh, and gunshot defects. Cannot replace a missing part. Uses collagenesis, synthesized from leather, as a synthetic skin graft alongside standard medicine.</description>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="CorrectMalunion"]/description</xpath>
+    <value>
+      <description>Re-break a crack that healed crooked or stiff, realign the bone and fix it for correct healing (corrective osteotomy). Treats old bone cracks including inside bones. Requires the part to still be present. Uses agavecine to promote bone formation alongside standard medicine.</description>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="ReconstructFace"]/description</xpath>
+    <value>
+      <description>Facial plastic reconstruction with scar revision, cartilage reshaping, and skin grafting of the head and face. Removes disfiguring scars and restores appearance, does not heal brain injuries. Uses collagenesis as dermal filler, or insectogel to smooth the skin, alongside standard medicine.</description>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="ReconstructNose"]/description</xpath>
+    <value>
+      <description>Rebuild a lost nose from the patient's own skin and cartilage, forehead flap and all. Ends disfigurement, but it will never smell like the real thing. Rebuilding cartilage and skin from scratch requires the leather-based collagenesis to form the structure of the new nose, alongside standard medicine.</description>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="RepairOrganScarring"]/description</xpath>
+    <value>
+      <description>Cut the scarring out of a failing organ with the patient open on the table. Very risky surgery, honestly you would be better off finding a "willing" donor and transplanting a fresh one instead. Takes the better part of a day, failure wounds but never kills. Internal organ repair is incredibly complex and requires agavecine alongside glitterworld medicine.</description>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/RecipeDef[defName="AestheticContouring"]/description</xpath>
+    <value>
+      <description>Cosmetic soft-tissue augmentation with fat grafting and dermal reshaping. Slightly increases beauty. No medical benefit, carries full surgical risk. Pumps the patient full of premium collagen fillers alongside glitterworld medicine.</description>
+    </value>
+  </Operation>
+
+</Patch>

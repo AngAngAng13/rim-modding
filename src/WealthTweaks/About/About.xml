@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Wealth Tweaks</name>
+  <author>lemonade</author>
+  <packageId>pineapplelemonade67.wealthtweaks</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>Adjust the wealth value of items, apparel, weapons, buildings, floors, and pawns. Set a global multiplier, fine-tune entire categories at once, or override individual items with per-def sliders.
+
+Features:
+- Three-layer system: global, category-level, and per-item multipliers (they stack)
+- Category browser with subcategories (Apparel > Headgear, Weapons > Ranged, etc.)
+- Search bar to find any item by name or defName
+- Fine-tune buttons for precise 0.05x adjustments
+- Changes apply live, no restart needed
+- Only affects colony wealth, does not alter trade prices
+- Works with mod-added items automatically
+
+Access the editor from Options - Mod Settings - Wealth Tweaks.
+
+Requires Harmony.</description>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+    </li>
+  </modDependencies>
+</ModMetaData>

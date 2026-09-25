@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <RecipeDef Name="SurgeryScarBase" ParentName="SurgeryFlesh" Abstract="True">
+    <workerClass>ReconstructiveSurgery.Recipe_RemovePermanentInjury</workerClass>
+    <targetsBodyPart>true</targetsBodyPart>
+    <isViolation>false</isViolation>
+    <recipeUsers>
+      <li>Human</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryScarBase">
+    <defName>ReviseScar</defName>
+    <label>revise scar</label>
+    <description>Excise old scar tissue from a healed cut, stab, or laceration and reclose the wound
+      for primary healing (scar revision / cicatrix excision). Treats surface scars only, will not
+      restore a missing part or internal organ.</description>
+    <jobString>Revising scar.</jobString>
+    <workAmount>2000</workAmount>
+    <successfullyRemovedHediffMessage>{0} has successfully revised {1}'s scar.</successfullyRemovedHediffMessage>
+    <surgerySuccessChanceFactor>1.2</surgerySuccessChanceFactor>
+    <deathOnFailedSurgeryChance>0</deathOnFailedSurgeryChance>
+    <skillRequirements>
+      <Medicine>5</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>MedicineHerbal</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <modExtensions>
+      <li Class="ReconstructiveSurgery.SurgeryScarExtension">
+        <allowedInjuryDefs>
+          <li>Misc</li>
+          <li>Cut</li>
+          <li>Scratch</li>
+          <li>Stab</li>
+          <li>Bite</li>
+          <li>SurgicalCut</li>
+        </allowedInjuryDefs>
+        <requireOutsideOnly>true</requireOutsideOnly>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryScarBase">
+    <defName>GraftBurnScar</defName>
+    <label>reconstructive graft</label>
+    <description>Excise dead tissue, eschar, mangled flesh, and contracted scar, then cover the
+      defect with a split-thickness skin graft. Treats burns, frostbite, crush mangling, shredded
+      flesh, and gunshot defects. Cannot replace a missing part.</description>
+    <jobString>Grafting tissue.</jobString>
+    <workAmount>3500</workAmount>
+    <successfullyRemovedHediffMessage>{0} has successfully grafted {1}'s wound.</successfullyRemovedHediffMessage>
+    <deathOnFailedSurgeryChance>0.02</deathOnFailedSurgeryChance>
+    <skillRequirements>
+      <Medicine>8</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>3</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>MedicineHerbal</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <modExtensions>
+      <li Class="ReconstructiveSurgery.SurgeryScarExtension">
+        <allowedInjuryDefs>
+          <li>Burn</li>
+          <li>ChemicalBurn</li>
+          <li>ElectricalBurn</li>
+          <li>AcidBurn</li>
+          <li>Frostbite</li>
+          <li>Crush</li>
+          <li>Gunshot</li>
+          <li>Shredded</li>
+        </allowedInjuryDefs>
+        <requireOutsideOnly>true</requireOutsideOnly>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryScarBase">
+    <defName>CorrectMalunion</defName>
+    <label>correct malunion</label>
+    <description>Re-break a crack that healed crooked or stiff, realign the bone and fix it for
+      correct healing (corrective osteotomy). Treats old bone cracks including inside bones.
+      Requires the part to still be present.</description>
+    <jobString>Correcting malunion.</jobString>
+    <workAmount>2800</workAmount>
+    <successfullyRemovedHediffMessage>{0} has successfully corrected {1}'s malunion.</successfullyRemovedHediffMessage>
+    <deathOnFailedSurgeryChance>0.02</deathOnFailedSurgeryChance>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>MedicineHerbal</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <modExtensions>
+      <li Class="ReconstructiveSurgery.SurgeryScarExtension">
+        <allowedInjuryDefs>
+          <li>Crack</li>
+        </allowedInjuryDefs>
+        <requireOutsideOnly>false</requireOutsideOnly>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryScarBase">
+    <defName>ReconstructFace</defName>
+    <label>reconstruct face</label>
+    <description>Facial plastic reconstruction with scar revision, cartilage reshaping, and skin
+      grafting of the head and face. Removes disfiguring scars and restores appearance, does not
+      heal brain injuries.</description>
+    <jobString>Reconstructing face.</jobString>
+    <workAmount>3200</workAmount>
+    <successfullyRemovedHediffMessage>{0} has successfully reconstructed {1}'s face.</successfullyRemovedHediffMessage>
+    <deathOnFailedSurgeryChance>0.02</deathOnFailedSurgeryChance>
+    <skillRequirements>
+      <Medicine>8</Medicine>
+    </skillRequirements>
+    <appliedOnFixedBodyPartGroups>
+      <li>FullHead</li>
+    </appliedOnFixedBodyPartGroups>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>3</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>MedicineHerbal</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <modExtensions>
+      <li Class="ReconstructiveSurgery.SurgeryScarExtension">
+        <allowedInjuryDefs>
+          <li>Misc</li>
+          <li>Cut</li>
+          <li>Scratch</li>
+          <li>Stab</li>
+          <li>Bite</li>
+          <li>SurgicalCut</li>
+          <li>Burn</li>
+          <li>ChemicalBurn</li>
+          <li>ElectricalBurn</li>
+          <li>AcidBurn</li>
+          <li>Frostbite</li>
+          <li>Crush</li>
+          <li>Gunshot</li>
+          <li>Shredded</li>
+        </allowedInjuryDefs>
+        <requireOutsideOnly>true</requireOutsideOnly>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryScarBase">
+    <defName>FullReconstruction</defName>
+    <label>plan full reconstruction</label>
+    <description>Survey every scar and queue one operation bill per treatable part: revision,
+      grafting, facial work, and bone correction each as its own bill. Adding this bill replaces it
+      with the individual operations.</description>
+    <jobString>Planning full reconstruction.</jobString>
+    <workAmount>500</workAmount>
+    <hideBodyPartNames>true</hideBodyPartNames>
+    <targetsBodyPart>false</targetsBodyPart>
+    <successfullyRemovedHediffMessage>{0} has fully reconstructed {1}.</successfullyRemovedHediffMessage>
+    <deathOnFailedSurgeryChance>0</deathOnFailedSurgeryChance>
+    <recipeUsers>
+      <li>Human</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+    <modExtensions>
+      <li Class="ReconstructiveSurgery.SurgeryScarExtension">
+        <allowedInjuryDefs>
+          <li>Misc</li>
+          <li>Cut</li>
+          <li>Scratch</li>
+          <li>Stab</li>
+          <li>Bite</li>
+          <li>SurgicalCut</li>
+          <li>Burn</li>
+          <li>ChemicalBurn</li>
+          <li>ElectricalBurn</li>
+          <li>AcidBurn</li>
+          <li>Frostbite</li>
+          <li>Crush</li>
+          <li>Gunshot</li>
+          <li>Shredded</li>
+          <li>Crack</li>
+        </allowedInjuryDefs>
+        <requireOutsideOnly>false</requireOutsideOnly>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>AestheticContouring</defName>
+    <label>aesthetic contouring</label>
+    <description>Cosmetic soft-tissue augmentation with fat grafting and dermal reshaping. Slightly
+      increases beauty. No medical benefit, carries full surgical risk.</description>
+    <workerClass>Recipe_AddHediff</workerClass>
+    <jobString>Performing aesthetic contouring.</jobString>
+    <workAmount>4000</workAmount>
+    <hideBodyPartNames>true</hideBodyPartNames>
+    <isViolation>false</isViolation>
+    <targetsBodyPart>false</targetsBodyPart>
+    <addsHediff>ReconstructiveContouring</addsHediff>
+    <deathOnFailedSurgeryChance>0.02</deathOnFailedSurgeryChance>
+    <skillRequirements>
+      <Medicine>10</Medicine>
+    </skillRequirements>
+    <recipeUsers>
+      <li>Human</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>3</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>MedicineHerbal</li>
+        <li>MedicineIndustrial</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryScarBase">
+    <defName>RepairOrganScarring</defName>
+    <label>repair organ scarring</label>
+    <description>Cut the scarring out of a failing organ with the patient open on the table. Very
+      risky surgery, honestly you would be better off finding a "willing" donor and transplanting a
+      fresh one instead. Takes the better part of a day, failure wounds but never kills.</description>
+    <jobString>Repairing organ scarring.</jobString>
+    <workAmount>20000</workAmount>
+    <successfullyRemovedHediffMessage>{0} has successfully repaired scarring in {1}'s organ.</successfullyRemovedHediffMessage>
+    <surgerySuccessChanceFactor>1.0</surgerySuccessChanceFactor>
+    <deathOnFailedSurgeryChance>0</deathOnFailedSurgeryChance>
+    <skillRequirements>
+      <Medicine>12</Medicine>
+    </skillRequirements>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>3</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>MedicineHerbal</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <modExtensions>
+      <li Class="ReconstructiveSurgery.SurgeryScarExtension">
+        <allowedInjuryDefs>
+          <li>Misc</li>
+          <li>Cut</li>
+          <li>Scratch</li>
+          <li>Stab</li>
+          <li>Bite</li>
+          <li>SurgicalCut</li>
+          <li>Burn</li>
+          <li>ChemicalBurn</li>
+          <li>ElectricalBurn</li>
+          <li>AcidBurn</li>
+          <li>Frostbite</li>
+          <li>Crush</li>
+          <li>Gunshot</li>
+          <li>Shredded</li>
+          <li>Crack</li>
+        </allowedInjuryDefs>
+        <requireOutsideOnly>false</requireOutsideOnly>
+        <requireInsideOnly>true</requireInsideOnly>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>ReconstructNose</defName>
+    <label>reconstruct nose</label>
+    <description>Rebuild a lost nose from the patient's own skin and cartilage, forehead flap and
+      all. Ends disfigurement, but it will never smell like the real thing.</description>
+    <workerClass>ReconstructiveSurgery.Recipe_ReconstructNose</workerClass>
+    <jobString>Reconstructing nose.</jobString>
+    <workAmount>2000</workAmount>
+    <successfullyRemovedHediffMessage>{0} has successfully reconstructed {1}'s nose.</successfullyRemovedHediffMessage>
+    <surgerySuccessChanceFactor>1.0</surgerySuccessChanceFactor>
+    <deathOnFailedSurgeryChance>0</deathOnFailedSurgeryChance>
+    <skillRequirements>
+      <Medicine>7</Medicine>
+    </skillRequirements>
+    <appliedOnFixedBodyParts>
+      <li>Nose</li>
+    </appliedOnFixedBodyParts>
+    <recipeUsers>
+      <li>Human</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>MedicineHerbal</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+  </RecipeDef>
+
+</Defs>

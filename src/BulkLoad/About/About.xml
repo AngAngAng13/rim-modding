@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Bulk Load</name>
+  <author>pineappleLemonade67</author>
+  <packageId>pineappleLemonade67.bulkload</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>Pawns use their inventory to carry more, reducing wasted trips across the colony.\n\nFeatures:\n- Bulk load transport pods, shuttles, and pit gates\n- Bulk load portals (Anomaly)\n- Unload carrier animals and pack animals in one pass\n- Crafting: gather all ingredients for a recipe in one trip instead of one per ingredient type\n- Unload leftover goods (Mod Settings): helps returning caravan members shelve goods they hold onto\n\nNo mod dependencies beyond Harmony. Works best with increased carry capacity.</description>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+  </loadAfter>
+</ModMetaData>

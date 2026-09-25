@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Mirror Build</name>
+  <author>pineappleLemonade67</author>
+  <packageId>pineapplelemonade67.mirrorbuild</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>From-the-Depths-style mirror building: place on one side, get the other side free.
+
+While a build, reinstall, or plan designator is selected:
+- M: cycle mirror mode (off -&gt; vertical -&gt; horizontal -&gt; 4-way)
+- N: lock/unlock the mirror axis (unlocked, it follows the mouse)
+
+Mirrored placements keep stuff and get mirrored rotation. Both keys are rebindable under Architect controls.
+
+Mod settings: axis line color, toggleable axis numbers with adjustable gap (counted outward from the axis), and opt-in mirroring of planning designations.</description>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+    </li>
+  </modDependencies>
+</ModMetaData>
