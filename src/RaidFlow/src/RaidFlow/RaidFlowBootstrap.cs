@@ -10,6 +10,7 @@ namespace RaidFlow
         {
             var harmony = new Harmony(RaidFlowMod.HarmonyId);
             harmony.PatchAll();
+            RaidFlowProfiler.LogSessionStart();
         }
     }
 }

@@ -39,13 +39,17 @@ namespace RaidFlow
 
         public static void FinishNormal(PathRequest request)
         {
+            bool logNow;
             lock (sync)
             {
                 if (!normalStarts.TryGetValue(request, out long start))
                     return;
                 normalStarts.Remove(request);
                 AddCapped(normalTimes, ElapsedMs(start));
+                logNow = normalTimes.Count % LogEverySamples == 0;
             }
+            if (logNow)
+                WriteLogLine();
         }
 
         public static void Reset()
@@ -87,6 +91,19 @@ namespace RaidFlow
             if (samples.Count >= MaxSamples)
                 samples.RemoveAt(0);
             samples.Add(milliseconds);
+        }
+
+        public static void LogSessionStart()
+        {
+            try
+            {
+                string dir = Path.Combine(Path.GetTempPath(), "RimWorldModLogs");
+                Directory.CreateDirectory(dir);
+                File.AppendAllText(Path.Combine(dir, "raidflow.log"), "SESSION_START tick=" + GenTicks.TicksGame + "\n");
+            }
+            catch (IOException)
+            {
+            }
         }
 
         private static void WriteLogLine()
