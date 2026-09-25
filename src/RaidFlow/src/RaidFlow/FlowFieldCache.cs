@@ -39,7 +39,26 @@ namespace RaidFlow
         {
             if (request == null)
                 return false;
-            return false;
+            Map map = request.map;
+            if (map == null || request.pawn == null)
+                return false;
+            FlowField field = GetOrCreate(request);
+            if (field == null)
+                return false;
+            List<IntVec3> nodes = field.TraceToGoal(map, request.Start);
+            if (nodes == null)
+                return false;
+            PawnPath path = map.pawnPathPool.GetPath();
+            for (int i = nodes.Count - 1; i >= 0; i--)
+                path.AddNode(nodes[i]);
+            int startIndex = map.cellIndices.CellToIndex(request.Start);
+            if (!PawnPathInit.SetStarted(path, nodes.Count - 1, field.CostAt(startIndex)))
+            {
+                path.Dispose();
+                return false;
+            }
+            request.Resolve(path);
+            return true;
         }
 
         private static void EvictOldest()

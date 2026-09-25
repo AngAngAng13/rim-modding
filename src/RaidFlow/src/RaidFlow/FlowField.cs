@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -27,6 +28,53 @@ namespace RaidFlow
         public int CostAt(int index)
         {
             return costs[index];
+        }
+
+        public List<IntVec3> TraceToGoal(Map map, IntVec3 start)
+        {
+            if (!start.InBounds(map))
+                return null;
+            int current = map.cellIndices.CellToIndex(start);
+            if (costs[current] == Unreached)
+                return null;
+            var nodes = new List<IntVec3>(64);
+            nodes.Add(start);
+            int guard = costs.Length;
+            while (guard-- > 0)
+            {
+                int currentCost = costs[current];
+                if (currentCost == 0)
+                    return nodes.Count >= 2 ? nodes : null;
+                int cx = current % width;
+                int cz = current / width;
+                int best = -1;
+                int bestCost = currentCost;
+                for (int dz = -1; dz <= 1; dz++)
+                {
+                    for (int dx = -1; dx <= 1; dx++)
+                    {
+                        if (dx == 0 && dz == 0)
+                            continue;
+                        int nx = cx + dx;
+                        int nz = cz + dz;
+                        if (nx < 0 || nz < 0 || nx >= map.Size.x || nz >= map.Size.z)
+                            continue;
+                        int next = nz * width + nx;
+                        int nextCost = costs[next];
+                        if (nextCost >= bestCost)
+                            continue;
+                        if (dx != 0 && dz != 0 && (costs[cz * width + nx] == Unreached || costs[nz * width + cx] == Unreached))
+                            continue;
+                        best = next;
+                        bestCost = nextCost;
+                    }
+                }
+                if (best < 0)
+                    return null;
+                current = best;
+                nodes.Add(new IntVec3(current % width, 0, current / width));
+            }
+            return null;
         }
 
         public static FlowField Compute(Map map, FlowFieldKey key, TraverseParms parms, AvoidGrid avoidGrid)
