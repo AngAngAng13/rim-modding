@@ -14,13 +14,9 @@ namespace RaidFlow
 
         public static FlowField GetOrCreate(PathRequest request)
         {
-            Pawn pawn = request.pawn;
-            Map map = request.map;
-            if (pawn == null || map == null || map.Disposed)
+            if (!BuildKey(request, out FlowFieldKey key, out TraverseParms parms, out AvoidGrid avoidGrid))
                 return null;
-            TraverseParms parms = request.TraverseParms;
-            pawn.TryGetAvoidGrid(out AvoidGrid avoidGrid);
-            var key = new FlowFieldKey(map, request.ExactDestination, parms.canBashDoors, parms.canBashFences, avoidGrid != null, request.Tuning);
+            Map map = request.map;
             int now = GenTicks.TicksGame;
             if (fields.TryGetValue(key, out FlowField field))
             {
@@ -38,6 +34,21 @@ namespace RaidFlow
             return field;
         }
 
+        private static bool BuildKey(PathRequest request, out FlowFieldKey key, out TraverseParms parms, out AvoidGrid avoidGrid)
+        {
+            key = default;
+            parms = default;
+            avoidGrid = null;
+            Pawn pawn = request?.pawn;
+            Map map = request?.map;
+            if (pawn == null || map == null || map.Disposed)
+                return false;
+            parms = request.TraverseParms;
+            pawn.TryGetAvoidGrid(out avoidGrid);
+            key = new FlowFieldKey(map, request.ExactDestination, parms.canBashDoors, parms.canBashFences, avoidGrid != null, request.Tuning);
+            return true;
+        }
+
         public static bool TryResolve(PathRequest request)
         {
             if (request == null)
@@ -48,9 +59,13 @@ namespace RaidFlow
             FlowField field = GetOrCreate(request);
             if (field == null)
                 return false;
-            List<IntVec3> nodes = field.TraceToGoal(map, request.Start);
-            if (nodes == null)
+            List<IntVec3> nodes = field.TraceToGoal(map, request.pawn, request.Start, request.ExactDestination);
+            if (nodes == null || !LiveRoute(map, request.TraverseParms, nodes))
+            {
+                if (BuildKey(request, out FlowFieldKey stale, out _, out _))
+                    fields.Remove(stale);
                 return false;
+            }
             PawnPath path = map.pawnPathPool.GetPath();
             for (int i = nodes.Count - 1; i >= 0; i--)
                 path.AddNode(nodes[i]);
@@ -62,6 +77,40 @@ namespace RaidFlow
             }
             request.Resolve(path);
             return true;
+        }
+
+        private static bool LiveRoute(Map map, TraverseParms parms, List<IntVec3> nodes)
+        {
+            PathGrid grid = map.pathing.For(parms).pathGrid;
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (!LiveEnterable(map, grid, parms, nodes[i]))
+                    return false;
+                if (i > 0)
+                {
+                    int dx = nodes[i].x - nodes[i - 1].x;
+                    int dz = nodes[i].z - nodes[i - 1].z;
+                    if (dx != 0 && dz != 0)
+                    {
+                        var sideA = new IntVec3(nodes[i - 1].x + dx, 0, nodes[i - 1].z);
+                        var sideB = new IntVec3(nodes[i - 1].x, 0, nodes[i - 1].z + dz);
+                        if (!sideA.InBounds(map) || !sideB.InBounds(map))
+                            return false;
+                        if (!LiveEnterable(map, grid, parms, sideA) || !LiveEnterable(map, grid, parms, sideB))
+                            return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static bool LiveEnterable(Map map, PathGrid grid, TraverseParms parms, IntVec3 cell)
+        {
+            if (grid.Cost(cell) < PathGrid.ImpassableCost)
+                return true;
+            if (parms.canBashDoors && cell.GetDoor(map) != null)
+                return true;
+            return parms.canBashFences && cell.GetEdifice(map)?.def.IsFence == true;
         }
 
         private static void SweepDisposed()

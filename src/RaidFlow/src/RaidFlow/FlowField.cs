@@ -30,13 +30,16 @@ namespace RaidFlow
             return costs[index];
         }
 
-        public List<IntVec3> TraceToGoal(Map map, IntVec3 start)
+        public List<IntVec3> TraceToGoal(Map map, Pawn pawn, IntVec3 start, IntVec3 goal)
         {
             if (!start.InBounds(map))
                 return null;
             int current = map.cellIndices.CellToIndex(start);
             if (costs[current] == Unreached)
                 return null;
+            int salt = pawn != null ? pawn.thingIDNumber : 0;
+            bool collide = pawn != null && PawnUtility.ShouldCollideWithPawns(pawn);
+            bool trouble = pawn != null && pawn.pather.BestPathHadPawnsInTheWayRecently();
             var nodes = new List<IntVec3>(64);
             nodes.Add(start);
             int guard = costs.Length;
@@ -48,7 +51,7 @@ namespace RaidFlow
                 int cx = current % width;
                 int cz = current / width;
                 int best = -1;
-                int bestCost = currentCost;
+                int bestEffective = int.MaxValue;
                 for (int dz = -1; dz <= 1; dz++)
                 {
                     for (int dx = -1; dx <= 1; dx++)
@@ -61,12 +64,17 @@ namespace RaidFlow
                             continue;
                         int next = nz * width + nx;
                         int nextCost = costs[next];
-                        if (nextCost >= bestCost)
+                        if (nextCost >= currentCost)
                             continue;
                         if (dx != 0 && dz != 0 && (costs[cz * width + nx] == Unreached || costs[nz * width + cx] == Unreached))
                             continue;
+                        int effective = nextCost + PawnPenalty(map, pawn, collide, trouble, start, goal, nx, nz);
+                        if (effective > bestEffective)
+                            continue;
+                        if (best >= 0 && effective == bestEffective && ((best ^ salt) & 7) <= ((next ^ salt) & 7))
+                            continue;
                         best = next;
-                        bestCost = nextCost;
+                        bestEffective = effective;
                     }
                 }
                 if (best < 0)
@@ -75,6 +83,21 @@ namespace RaidFlow
                 nodes.Add(new IntVec3(current % width, 0, current / width));
             }
             return null;
+        }
+
+        private static int PawnPenalty(Map map, Pawn pawn, bool collide, bool trouble, IntVec3 start, IntVec3 goal, int nx, int nz)
+        {
+            if (!collide)
+                return 0;
+            if (!trouble)
+            {
+                int nearStart = System.Math.Abs(nx - start.x) + System.Math.Abs(nz - start.z);
+                int nearGoal = System.Math.Abs(nx - goal.x) + System.Math.Abs(nz - goal.z);
+                if (System.Math.Min(nearStart, nearGoal) > 32)
+                    return 0;
+            }
+            var cell = new IntVec3(nx, 0, nz);
+            return PawnUtility.AnyPawnBlockingPathAt(cell, pawn, false, false, true, false) ? 175 : 0;
         }
 
         public static FlowField Compute(Map map, FlowFieldKey key, TraverseParms parms, AvoidGrid avoidGrid)
